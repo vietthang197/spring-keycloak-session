@@ -20,30 +20,13 @@ import java.util.List;
 @RequestMapping("/")
 public class TestController {
 
-    @GetMapping("/")
-    public List<Permission> test(HttpServletRequest httpServletRequest) {
-        KeycloakSecurityContext keycloakSecurityContext = (KeycloakSecurityContext) httpServletRequest.getAttribute(KeycloakSecurityContext.class.getName());
-        AuthorizationContext authzContext = keycloakSecurityContext.getAuthorizationContext();
-        ClientAuthorizationContext clientContext = ClientAuthorizationContext.class.cast(authzContext);
-        AuthzClient authzClient = clientContext.getClient();
-        AuthorizationResponse authorizationResponse = authzClient.authorization().authorize(new AuthorizationRequest());
-
-        String rpt = authorizationResponse.getToken();
-        TokenIntrospectionResponse requestingPartyToken = authzClient.protection().introspectRequestingPartyToken(rpt);
-        return requestingPartyToken.getPermissions();
+    @GetMapping("/view")
+    public String test(HttpServletRequest httpServletRequest) {
+        return "OK-view";
     }
 
-    @GetMapping("/test")
-    @PermitAll
-    public List<Permission> test2(HttpServletRequest httpServletRequest) {
-        KeycloakSecurityContext keycloakSecurityContext = (KeycloakSecurityContext) httpServletRequest.getAttribute(KeycloakSecurityContext.class.getName());
-        AuthorizationContext authzContext = keycloakSecurityContext.getAuthorizationContext();
-        ClientAuthorizationContext clientContext = ClientAuthorizationContext.class.cast(authzContext);
-        AuthzClient authzClient = clientContext.getClient();
-        AuthorizationResponse authorizationResponse = authzClient.authorization().authorize(new AuthorizationRequest());
-
-        String rpt = authorizationResponse.getToken();
-        TokenIntrospectionResponse requestingPartyToken = authzClient.protection().introspectRequestingPartyToken(rpt);
-        return requestingPartyToken.getPermissions();
+    @GetMapping("/delete")
+    public String test2(HttpServletRequest httpServletRequest) {
+        return "OK-delete";
     }
 }
